@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, TEXT
+from sqlalchemy import Column, Integer, TEXT
 from app import Base
 from app import engine
 
@@ -28,14 +28,14 @@ class Subs(Base):
     Parent_ID = Column(TEXT)
 
 
-# class WhoMSg(Base):
-#     __tablename__ = "message"
-#     __bind_key__ = 'database_comments'
-#     __table_args__ = {'useexisting': True}
-#     id = Column(Integer, primary_key=True)
-#     datestamp = Column(TEXT)
-#     subreddit = Column(TEXT)
-#     username = Column(TEXT)
+class WhoMSg(Base):
+    __tablename__ = "message"
+    __bind_key__ = 'reddit_database_comments'
+    __table_args__ = {'useexisting': True}
+    id = Column(Integer, primary_key=True)
+    datestamp = Column(TEXT)
+    subreddit = Column(TEXT)
+    username = Column(TEXT)
 
 
 Base.metadata.create_all(engine)

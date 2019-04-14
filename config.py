@@ -1,6 +1,5 @@
 
 
-
 # Database connections
 
 # databases info
@@ -8,17 +7,17 @@ MYSQL_USERNAME = 'root'
 MYSQL_PW = 'password'
 
 
-MYSQL_SERVER = '127.0.0.1:3306'
+MYSQL_SERVER = '127.0.0.1:3307'
 
 MYSQL_DBNAME0 = 'reddit_database_comments'
 MYSQL_DBNAME1 = 'reddit_database_users'
 
-# Users
+# comments
 SQLALCHEMY_DATABASE_URI_0 = "mysql+pymysql://{}:{}@{}/{}".format(MYSQL_USERNAME,
                                                                MYSQL_PW,
                                                                MYSQL_SERVER,
                                                                MYSQL_DBNAME0)
-#  Comments
+#  users
 SQLALCHEMY_DATABASE_URI_1 = "mysql+pymysql://{}:{}@{}/{}".format(MYSQL_USERNAME,
                                                                  MYSQL_PW,
                                                                  MYSQL_SERVER,

@@ -1,7 +1,7 @@
-from app import session
+from app import session2, session
 from app.intelbot.models import FunnyStuff, FoodStuff
+from app.createuserbot.models import Bots
 import praw
-
 
 
 """
@@ -14,6 +14,7 @@ subs = ['funny', 'food', 'pizza', 'sushi']
 
 banstuff = ['**', 'http', '**',
             '/r', 'r/', '/R',
+            '/u', 'u/', '/user',
             'removed', '[removed]',
             'ban', '[deleted]', 'fuck',
             "FUCK", 'Fuck']
@@ -23,16 +24,14 @@ def addcomment(sub, comment):
 
     try:
         if sub == 'food' or sub == 'pizza' or sub == 'sushi':
-            addcommentfood = FoodStuff(comment=comment)
-            session.add(addcommentfood)
+            addcomment_food = FoodStuff(comment=comment)
+            session.add(addcomment_food)
             session.commit()
-            print("added to food")
-        elif sub == 'funny':
-            addcomment = FunnyStuff(comment=comment)
-            session.add(addcomment)
-            session.commit()
-            print("added to funny")
 
+        elif sub == 'funny':
+            addcomment_funny = FunnyStuff(comment=comment)
+            session.add(addcomment_funny)
+            session.commit()
         else:
             pass
     except Exception as e:
@@ -44,30 +43,24 @@ def addcomment(sub, comment):
 
 
 def main():
-
-    username = 'redbeerdawg12'
-    reddit = praw.Reddit(client_id='vJYSY6c--NRTTQ',
-                         client_secret='x2JaRHC4HgzgiYmaCHMRioBrO-o',
-                         password='richardnixon1975',
-                         user_agent='crawling every day',
-                         username=username)
+    user = session2.query(Bots).filter_by(id=4).first()
+    reddit = praw.Reddit(client_id=user.client_id,
+                         client_secret=user.client_secret,
+                         password=user.password,
+                         user_agent=user.user_agent,
+                         username=user.username)
     for sub in subs:
-
         subreddit = reddit.subreddit(sub)
-        submissions = subreddit.hot(limit=100)
-
+        submissions = subreddit.hot(limit=1)
         for submission in submissions:
-            print(submission)
             try:
                 for comment in submission.comments:
                     if len(comment.body) <= 50:
-                        if comment.body in banstuff:
+                        if comment.body in banstuff or comment.body.startswith("r/") or comment.body.startswith("/r"):
                             pass
                         else:
                             x = comment.body
-
-                            addcomment(sub=sub,
-                                       comment=x)
+                            addcomment(sub=sub, comment=x)
 
             except Exception as e:
                 print("Error")

@@ -1,4 +1,4 @@
-from app.workbot import msg_for_agorabit
+from app.createuserbot import target_reddit
 
 
 def startbot():
@@ -7,7 +7,7 @@ def startbot():
       It will avoid mods.  The username will be banned easily so create more bots!
     :return:
     """
-    msg_for_agorabit.main()
+    target_reddit.main()
 
 
 
