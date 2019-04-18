@@ -7,7 +7,7 @@ MYSQL_USERNAME = 'root'
 MYSQL_PW = 'password'
 
 
-MYSQL_SERVER = '127.0.0.1:3307'
+MYSQL_SERVER = '127.0.0.1:3306'
 
 MYSQL_DBNAME0 = 'reddit_database_comments'
 MYSQL_DBNAME1 = 'reddit_database_users'
