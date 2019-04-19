@@ -256,6 +256,11 @@ def removeoldfile():
     # and should be removed just in case.
     print("Removing old files...")
     try:
+        os.system('rm ' + download_location + 'audio.wav')
+    except:
+        pass
+    try:
+
         os.system('rm ' + download_location + 'audio.mp3')
     except:
         pass
@@ -269,12 +274,11 @@ def convertfile():
     print("Converting Captcha...")
     # it downloaded to weird location
     os.rename("/home/bot/.PyCharm2016.1/config/jdbc-drivers/audio.mp3", "/home/bot/Downloads/audio.mp3")
-    # after it downloads to folder..convert it for google
-    os.system("echo 'y' | ffmpeg -i " + download_location + "audio.mp3 " + download_location + "audio.wav")
-    arch = subprocess.check_output("echo 'y' | ffmpeg -i " + download_location + "audio.mp3",
-                                   shell=True)
-    print(arch)
-    print("converterd?")
+    # after it downloads to folder..convert it for google to a .wav
+    os.system("ffmpeg -i " + download_location + "audio.mp3 " + download_location + "audio.wav")
+    #arch = subprocess.check_output("ffmpeg -i " + download_location + "audio.wav", shell=True)
+    #print(arch)
+    print("converte?")
     with sr.AudioFile(download_location + 'audio.wav') as source:
         audio = r.record(source)
 

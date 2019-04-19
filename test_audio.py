@@ -7,7 +7,7 @@ def startbot():
       It will avoid mods.  The username will be banned easily so create more bots!
     :return:
     """
-    test_audio.convertfile()
+    test_audio.convertfile2()
 
 
 
