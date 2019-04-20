@@ -10,7 +10,7 @@ def create_email(chars=string.ascii_uppercase + string.digits):
 
 
 def create_password(chars=string.ascii_uppercase + string.digits):
-    thesize = random.randint(22, 40)
+    thesize = random.randint(20, 30)
     return ''.join(random.choice(chars) for _ in range(thesize))
 
 
