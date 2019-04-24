@@ -63,6 +63,7 @@ CLOSE_LOCATION = (16, 10)
 ''' END SETUP '''
 
 
+
 def checkcaptcha():
     """
     Check if we've completed the captcha successfully.
@@ -133,6 +134,7 @@ def addtodatabase(username,
                           client_secret=client_secret,
                           user_agent=user_agent,
                           user_email=email,
+                          post_count=0
                           )
         session2.add(new_person)
         session2.commit()
@@ -255,9 +257,7 @@ def convertfile():
     os.rename("/home/bot/.PyCharm2016.1/config/jdbc-drivers/audio.mp3", "/home/bot/Downloads/audio.mp3")
     # after it downloads to folder..convert it for google to a .wav
     os.system("ffmpeg -i " + download_location + "audio.mp3 " + download_location + "audio.wav")
-    #arch = subprocess.check_output("ffmpeg -i " + download_location + "audio.wav", shell=True)
-    #print(arch)
-    print("converte?")
+
     with sr.AudioFile(download_location + 'audio.wav') as source:
         audio = r.record(source)
 
@@ -331,8 +331,9 @@ def closebrowser():
     pyautogui.moveTo(CLOSE_LOCATION)
     pyautogui.click()
 
-def testlogin(test_username, test_password):
 
+def testlogin(test_username, test_password):
+    time.sleep(3)
     options = Options()
 
     options.headless = True
@@ -354,6 +355,7 @@ def testlogin(test_username, test_password):
     submit = form.find_element_by_class_name("AnimatedForm__submitButton")
     submit.click()
     time.sleep(6)
+    driver.save_screenshot("test.png")
     # test to see if successful
     try:
         seeifavatar = driver.find_element_by_xpath("/html/body/div[1]/div/div/div/div[1]/header/div/div[2]/div[2]/div/div[2]/button/div/div/img")

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1d8ddc14-f26e-42e4-ad9e-037b6e37be0b" name="bot (project level)" url="http://192.168.1.99">
+        <fileTransfer host="192.168.1.99" port="22" privateKey="$USER_HOME$/.ssh/id_rsa" rootFolder="/home/bot" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
