@@ -1,4 +1,4 @@
-from app.createuserbot import test_login
+from app.createapibot import get_users_api
 
 
 def startbot():
@@ -7,7 +7,7 @@ def startbot():
       It will avoid mods.  The username will be banned easily so create more bots!
     :return:
     """
-    test_login.getauser()
+    get_users_api.main()
 
 
 
