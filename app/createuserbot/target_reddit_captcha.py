@@ -9,6 +9,9 @@ from app import session2
 from app.createuserbot.models import Bots
 from app.createuserbot.create_a_username import create_username
 from app.createuserbot.get_cords import cords
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+from selenium.common.exceptions import NoSuchElementException
 
 
 
@@ -57,40 +60,6 @@ FINAL_COORDS = (531, 536)  # Text entry box
 CLOSE_LOCATION = (16, 10)
 
 ''' END SETUP '''
-
-
-
-def checkcaptcha():
-    """
-    Check if we've completed the captcha successfully.
-    """
-    print("seeing the color ...")
-    pyautogui.moveTo(CHECK_COORDS_OPENCHALLENGE)
-    thecolor = runcommand(
-        "eval $(xdotool getmouselocation --shell); xwd -root -silent | convert xwd:- -depth 8 -crop \"1x1+$X+$Y\" txt:- | grep -om1 '#\w\+'")
-    print("Color: ", thecolor)
-    thecolor = thecolor.decode('utf-8')
-    thecolor = thecolor.upper()
-    if CHECK_COLOR2 in str(thecolor) or str(CHECK_COLOR3) in str(thecolor):
-        print("theres the color..it let us in")
-        output = 1
-    elif str(thecolor) == str(CHECK_COLOR4):
-        print("Solved ..")
-        output = 1
-
-    else:
-        output = 0
-        print("UNKNOWN COLOR: thecolor")
-    return output
-
-
-def runcommand(command):
-    """
-    Run a command and get back its output
-    """
-
-    proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    return proc.communicate()[0].split()[0]
 
 
 
@@ -187,57 +156,9 @@ def gettowebsite():
     return newemail
 
 
-def downloadcaptcha():
-
-    print("clicking captcha")
-    pyautogui.moveTo(CAPTCHA_COORDS)
-    pyautogui.click()
-    time.sleep(10)
-
-    # go to audio button
-    print("Didnt auto pass..going for audio challenge")
-    pyautogui.moveTo(AUDIO_COORDS)
-    current_cords = cords()
-    print(current_cords)
-    pyautogui.click()
-    time.sleep(2)
-
-    #left click download
-    pyautogui.moveTo(DOWNLOAD_COORDS)
-    pyautogui.rightClick()
-    time.sleep(3)
-
-    # move to save link as..when you right click
-    pyautogui.moveTo(OK_RIGHTCLICK_BUTTON_COORDS)
-    pyautogui.click()
-    time.sleep(3)
-
-    # just press enter when the new popup opens
-    pyautogui.press("enter")
-
-    # CLOSE the new tab
-    pyautogui.moveTo(CLOSE_TAB_BUTTON_COORDS)
-    pyautogui.click()
-    time.sleep(3)
-    return 2
 
 
-def removeoldfile():
-    # These files may be left over from previous runs,
-    # and should be removed just in case.
-    print("Removing old files...")
-    try:
-        os.system('rm ' + download_location + 'audio.wav')
-    except:
-        pass
-    try:
-        os.system('rm ' + download_location + 'audio.mp3')
-    except:
-        pass
-    try:
-        os.system('rm ' + pycharm_location + 'audio.mp3')
-    except:
-        pass
+
 
 
 def convertfile():
@@ -258,53 +179,6 @@ def convertfile():
     return str(determined)
 
 
-def runcap():
-    try:
-        downloadresult = downloadcaptcha()
-
-        # if it just let us in
-        if downloadresult == 1:
-            print("downloadresult is 1")
-            # create username pass, get api
-
-            result = checkcaptcha()
-
-            return result
-
-        # if it wanted to do captcha
-        elif downloadresult == 2:
-
-            # Convert the file to a format our APIs will understand
-            findthetext = convertfile()
-
-            print("Inputting Answer")
-            # Input the captcha
-            pyautogui.moveTo(FINAL_COORDS)
-            pyautogui.click()
-            time.sleep(.5)
-            pyautogui.typewrite(findthetext, interval=.15)
-            time.sleep(.5)
-            pyautogui.moveTo(VERIFY_COORDS)
-            pyautogui.click()
-
-            print("Verifying Answer")
-            time.sleep(2)
-
-            # Check that the captcha is completed
-            result = checkcaptcha()
-
-            return result
-        else:
-            result = 3
-            print("found out im a bot ..beep beep")
-            return result
-
-    except Exception as e:
-        print(str(e))
-        result = 4
-        print("found out im a bot ..beep beep")
-        return result
-
 
 
 def confirmuser():
@@ -316,17 +190,17 @@ def confirmuser():
     pyautogui.moveTo(NEXT_BUTTON)
     pyautogui.click()
     time.sleep(4)
-
-
 def closebrowser():
     # close out finally
     pyautogui.moveTo(CLOSE_LOCATION)
     pyautogui.click()
+    command = 'killall -9 firefox'
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    return proc.communicate()[0].split()[0]
+
 
 
 def main():
-    # remove old file
-    removeoldfile()
 
     # go to website get an email
     useremail = gettowebsite()
@@ -334,9 +208,7 @@ def main():
     # get a username and password
     theuser, thepassword = get_a_user()
 
-    # beat the captcha get the download file
-    runcap()
-    #
+
     confirmuser()
     closebrowser()
     addtodatabase(username=theuser,
@@ -347,8 +219,6 @@ def main():
               user_agent="",
               email=useremail,
               )
-
-
 
 
 

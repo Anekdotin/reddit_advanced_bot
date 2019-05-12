@@ -1,5 +1,3 @@
-
-
 from sqlalchemy import Column, Integer, TEXT
 from app import Base2
 from app import engine2
@@ -18,6 +16,6 @@ class Bots(Base2):
     user_agent = Column(TEXT)
     post_count = Column(Integer)
     user_email = Column(TEXT)
-
+    karma = Column(Integer)
 
 Base2.metadata.create_all(engine2)

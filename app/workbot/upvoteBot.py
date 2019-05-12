@@ -1,6 +1,6 @@
 from datetime import datetime
 import praw
-from app.karmabot.models import Bots
+from app.createuserbot.models import Bots
 from app import session
 from sqlalchemy import func
 import time

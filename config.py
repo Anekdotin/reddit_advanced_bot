@@ -31,5 +31,5 @@ SQLALCHEMY_BINDS = {
 }
 
 #-------------------------------------------------------------#
-customlog = '/home/logs/'
+
 SQLALCHEMY_TRACK_MODIFICATIONS = False

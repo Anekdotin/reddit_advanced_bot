@@ -1,4 +1,4 @@
-from app.createuserbot import test_audio
+from app.karmabot import get_a_users_karma
 
 
 def startbot():
@@ -7,7 +7,7 @@ def startbot():
       It will avoid mods.  The username will be banned easily so create more bots!
     :return:
     """
-    test_audio.convertfile2()
+    get_a_users_karma.getkarma()
 
 
 

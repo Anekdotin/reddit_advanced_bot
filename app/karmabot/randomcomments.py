@@ -44,7 +44,7 @@ def addcomment(sub, post):
 
 
 def main():
-    user = session2.query(Bots).order_by(func.rand()).first()
+    user = session2.query(Bots).filter(Bots.client_id != "").order_by(func.rand()).first()
     print("")
     print("")
     print("*" * 10)

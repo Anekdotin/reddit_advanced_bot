@@ -23,7 +23,7 @@ def get_names():
 def last_name_number(last_name):
 
     username = ''
-    n = random.choice(range(2, 6))
+    n = random.choice(range(5, 10))
     username += last_name
     username += ''.join(random.choice(string.digits) for _ in range(n))
 
@@ -33,7 +33,7 @@ def last_name_number(last_name):
 def first_name_number(first_name):
 
     username = ''
-    n = random.choice(range(1, 4))
+    n = random.choice(range(5, 10))
     username += first_name
     username += ''.join(random.choice(string.digits) for _ in range(n))
 
@@ -43,7 +43,7 @@ def first_name_number(first_name):
 def number_last(first_name, last_name):
 
     username = ''
-    n = random.choice(range(1, 4))
+    n = random.choice(range(3, 7))
     username += first_name[0].lower()
     username += last_name
     username += ''.join(random.choice(string.digits) for _ in range(n))
